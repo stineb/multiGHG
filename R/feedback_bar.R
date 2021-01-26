@@ -2,21 +2,36 @@
 rcp <- 8
 
 if (rcp==2){
-  data.ct <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_CT.dat',
+  # data.ct <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_CT.dat',
+  #                       col.names=c("ycord","min","mean","max") )
+  # data.c <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_C.dat',
+  #                      col.names=c("ycord","min","mean","max") )
+  # data.t <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_T.dat',
+  #                      col.names=c("ycord","min","mean","max") )
+
+  data.ct <- read.table( '~/data/output_multiGHG/agents_CT.dat',
                         col.names=c("ycord","min","mean","max") )
-  data.c <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_C.dat',
+  data.c <- read.table( '~/data/output_multiGHG/agents_C.dat',
                        col.names=c("ycord","min","mean","max") )
-  data.t <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_T.dat',
+  data.t <- read.table( '~/data/output_multiGHG/agents_T.dat',
                        col.names=c("ycord","min","mean","max") )
+
 }else if (rcp==8){
-  data.ct <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_CT.dat',
+  # data.ct <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_CT.dat',
+  #                       col.names=c("ycord","min","mean","max") )
+  # data.c <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_C.dat',
+  #                      col.names=c("ycord","min","mean","max") )
+  # data.t <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_T.dat',
+  #                      col.names=c("ycord","min","mean","max") )
+
+  data.ct <- read.table( '~/data/output_multiGHG/agents_CT.dat',
                         col.names=c("ycord","min","mean","max") )
-  data.c <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_C.dat',
+  data.c <- read.table( '~/data/output_multiGHG/agents_C.dat',
                        col.names=c("ycord","min","mean","max") )
-  data.t <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_T.dat',
+  data.t <- read.table( '~/data/output_multiGHG/agents_T.dat',
                        col.names=c("ycord","min","mean","max") )
   
-  data.procs <- read.table( '/alphadata01/bstocker/multiGHG_analysis/procs_redux.dat',
+  data.procs <- read.table( './data/procs_redux.dat',
                      col.names=c("ycord","min","mean","max") )
   
 }else{
@@ -26,13 +41,13 @@ if (rcp==2){
 #data.ct$ycord <- -(data.ct$ycord+0.8)
 
 if (rcp==2){
-  pdf( '/alphadata01/bstocker/multiGHG_analysis/feedback_bar_rcp26.pdf', width=5, height=10 )
+  pdf( './fig/feedback_bar_rcp26.pdf', width=5, height=10 )
   xlim1 <- -0.36
   xlim2 <- 0.36
   lboxl <- -0.06
   linethick <- 0.0025
 }else if (rcp==8){
-  pdf( '/alphadata01/bstocker/multiGHG_analysis/feedback_bar.pdf', width=5, height=10 )
+  pdf( './fig/feedback_bar.pdf', width=5, height=10 )
   xlim1 <- -0.2
   xlim2 <- 0.2
   lboxl <- -0.04
@@ -185,7 +200,7 @@ char.t <- as.character( format( data.t$mean, digits=3 ) )
 
 char.procs <- as.character( format( data.procs$mean, digits=3 ) )
 
-out <- file("terrestrial_feedbacks_table_BStocker2013.out","w")
+out <- file("data/terrestrial_feedbacks_table_BStocker2013.out","w")
 cat("Source: Stocker et al., 2013, Nature Climate Change","\n",file=out)
 cat("Multiple greenhouse gas feedbacks from the land biosphere under future climate change scenarios","\n",file=out)
 cat("Evaluated from RCP 8.5 simulation","\n",file=out,sep=" ")
