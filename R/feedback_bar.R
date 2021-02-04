@@ -9,11 +9,11 @@ if (rcp==2){
   # data.t <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/rcp26/agents_T.dat',
   #                      col.names=c("ycord","min","mean","max") )
 
-  data.ct <- read.table( '~/data/output_multiGHG/agents_CT.dat',
+  data.ct <- read.table( '~/data/output_multiGHG/agents_rcp26_CT.dat',
                         col.names=c("ycord","min","mean","max") )
-  data.c <- read.table( '~/data/output_multiGHG/agents_C.dat',
+  data.c <- read.table( '~/data/output_multiGHG/agents_rcp26_C.dat',
                        col.names=c("ycord","min","mean","max") )
-  data.t <- read.table( '~/data/output_multiGHG/agents_T.dat',
+  data.t <- read.table( '~/data/output_multiGHG/agents_rcp26_T.dat',
                        col.names=c("ycord","min","mean","max") )
 
 }else if (rcp==8){
@@ -24,16 +24,18 @@ if (rcp==2){
   # data.t <- read.table( '/alphadata01/bstocker/multiGHG_analysis/roth/agents_T.dat',
   #                      col.names=c("ycord","min","mean","max") )
 
-  data.ct <- read.table( '~/data/output_multiGHG/agents_CT.dat',
+  data.ct <- read.table( '~/data/output_multiGHG/agents_rcp85_CT.dat',
                         col.names=c("ycord","min","mean","max") )
-  data.c <- read.table( '~/data/output_multiGHG/agents_C.dat',
+  data.c <- read.table( '~/data/output_multiGHG/agents_rcp85_C.dat',
                        col.names=c("ycord","min","mean","max") )
-  data.t <- read.table( '~/data/output_multiGHG/agents_T.dat',
+  data.t <- read.table( '~/data/output_multiGHG/agents_rcp85_T.dat',
                        col.names=c("ycord","min","mean","max") )
-  
-  data.procs <- read.table( './data/procs_redux.dat',
+
+  # data.procs <- read.table( './data/procs_redux.dat',
+  #                    col.names=c("ycord","min","mean","max") )
+  data.procs <- read.table( '~/data/output_multiGHG/procs_redux.dat',
                      col.names=c("ycord","min","mean","max") )
-  
+
 }else{
   print("rcp indicated not available")
 }
@@ -46,6 +48,7 @@ if (rcp==2){
   xlim2 <- 0.36
   lboxl <- -0.06
   linethick <- 0.0025
+
 }else if (rcp==8){
   pdf( './fig/feedback_bar.pdf', width=5, height=10 )
   xlim1 <- -0.2
@@ -96,14 +99,14 @@ text( xlim1-0.01, -3, labels="CT", adj=c(0,0), font=2, srt=90, cex=2.5  )
 text( xlim2+0.01, -1.1, labels="present", adj=c(0,0), font=2, srt=-90, cex=1.5  )
 text( xlim2+0.01, -2.1, labels="2100", adj=c(0,0), font=2, srt=-90, cex=1.5  )
 text( xlim2+0.01, -3.1, labels="2300", adj=c(0,0), font=2, srt=-90 , cex=1.5 )
-par( xpd=FALSE ) 
+par( xpd=FALSE )
 abline( v=0 )
 
 par( xpd=TRUE )
 rect( data.ct$min, -data.ct$ycord-width, data.ct$max, -data.ct$ycord+width, col=colors.rect, border=NA )
 rect( data.ct$mean-linethick, -data.ct$ycord-width, data.ct$mean+linethick, -data.ct$ycord+width,
      col=colors.line, border=NA )
-par( xpd=FALSE ) 
+par( xpd=FALSE )
 
 
 
@@ -125,7 +128,7 @@ text( xlim1-0.01, -3.2, labels="T", adj=c(0,0), font=2, srt=90, cex=2.5  )
 text( xlim2+0.01, -1.1, labels="present", adj=c(0,0), font=2, srt=-90, cex=1.5  )
 text( xlim2+0.01, -2.1, labels="2100", adj=c(0,0), font=2, srt=-90, cex=1.5  )
 text( xlim2+0.01, -3.1, labels="2300", adj=c(0,0), font=2, srt=-90, cex=1.5  )
-par( xpd=FALSE ) 
+par( xpd=FALSE )
 abline( v=0 )
 
 rect( data.t$min, -data.t$ycord-width, data.t$max, -data.t$ycord+width, col=colors.rect, border=NA  )
@@ -168,14 +171,14 @@ text( xlim1-0.01, -3.3, labels="C", adj=c(0,0), font=2, srt=90, cex=2.5  )
 text( xlim2+0.01, -1.1, labels="present", adj=c(0,0), font=2, srt=-90, cex=1.5  )
 text( xlim2+0.01, -2.1, labels="2100", adj=c(0,0), font=2, srt=-90, cex=1.5  )
 text( xlim2+0.01, -3.1, labels="2300", adj=c(0,0), font=2, srt=-90, cex=1.5  )
-par( xpd=FALSE ) 
+par( xpd=FALSE )
 abline( v=0 )
 
 par( xpd=TRUE )
 rect( data.c$min, -data.c$ycord-width, data.c$max, -data.c$ycord+width, col=colors.rect, border=NA )
 rect( data.c$mean-linethick, -data.c$ycord-width, data.c$mean+linethick, -data.c$ycord+width,
      col=colors.line, border=NA )
-par( xpd=FALSE ) 
+par( xpd=FALSE )
 
 if (rcp==8){
   arrows( -0.18, -data.c$ycord[4], -0.195, -data.c$ycord[4], col=colors.line[4], length=0.05 )
@@ -194,8 +197,8 @@ dev.off()
 ## Numbers for IPCC: r^CT(N2O) at 2100 and 2300
 print(paste("r^CT(N2O) at 2100 and 2300: ",data.ct$mean[8:9]))
 
-char.ct <- as.character( format( data.ct$mean, digits=3 ) ) 
-char.c <- as.character( format( data.c$mean, digits=3 ) ) 
+char.ct <- as.character( format( data.ct$mean, digits=3 ) )
+char.c <- as.character( format( data.c$mean, digits=3 ) )
 char.t <- as.character( format( data.t$mean, digits=3 ) )
 
 char.procs <- as.character( format( data.procs$mean, digits=3 ) )
