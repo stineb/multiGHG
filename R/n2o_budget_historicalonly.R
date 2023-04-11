@@ -7,30 +7,33 @@
 ## Chose whether to diagnose flux or use explicit ocean source
 diag <- TRUE
 
-source('/alphadata01/bstocker/multiGHG_analysis/calcConc.R')
-source('/alphadata01/bstocker/multiGHG_analysis/myspline.R')
+source(paste0(here::here(), '/R/calcConc.R'))
+source(paste0(here::here(), '/R/myspline.R'))
 
 ## ////////////////////////////////////////////////////////////////////////////////////////////////
 ## READ FILES
 ## ------------------------------------------------------------------------------------------------
 
 ## Read list of file names
-names <- read.table('/alphadata01/bstocker/multiGHG_analysis/runnames_historical.txt', header=F )$V1
+names <- read.table(paste0(here::here(), '/data/runnames_historical.txt'), header=F )$V1
 nsims <- length(names)
 
 ## Read N2O concentration data to diagnose flux
-c.n2o.data <- read.table('/alphadata01/bstocker/multiGHG_analysis/cN2O_rcp85.dat', col.names=c("year","concentration"))
+c.n2o.data <- read.table(paste0(here::here(), '/data/cN2O_rcp85.dat'), col.names=c("year","concentration"))  # xxx missing from repo
 
 ## Read N2O emissions ANTH (=fossil+fire+manure) from Zaehle
-e.n2o.ext <- read.table('/alphadata01/bstocker/input_data/ghg_data/n2o_data/eN2Oext_bysources_rcp26_HARMONIZED.dat', head=TRUE )
+# e.n2o.ext <- read.table('/alphadata01/bstocker/input_data/ghg_data/n2o_data/eN2Oext_bysources_rcp26_HARMONIZED.dat', head=TRUE )
+e.n2o.ext <- read.table(paste0(here::here(), '/data/eN2Oext_bysources_rcp26_HARMONIZED.dat'), head=TRUE )  # xxx missing from repo
 
 ## Read oceanic N2O source
-e.n2o.oc <- read.table('/alphadata01/bstocker/multiGHG_analysis/eN2O_oc_historical.dat', col.names=c("year","emission"))
+# e.n2o.oc <- read.table('/alphadata01/bstocker/multiGHG_analysis/eN2O_oc_historical.dat', col.names=c("year","emission"))
+e.n2o.oc <- read.table(paste0(here::here(), '/data/eN2O_oc_historical.dat'), col.names=c("year","emission"))
 tmp <- data.frame( year=1765:(e.n2o.oc$year[1]-1), emission=rep(e.n2o.oc$emission[1],length(1765:(e.n2o.oc$year[1]-1))) )
 e.n2o.oc <- rbind( tmp, e.n2o.oc)
 
 ## Read N2O emissions from LPX simulations
-tmp <- read.table('/alphadata01/bstocker/output_multiGHG/eN2O_r1_historical.dat', header=F)
+# tmp <- read.table('/alphadata01/bstocker/output_multiGHG/eN2O_r1_historical.dat', header=F)
+tmp <- read.table(paste0(here::here(), '/data/eN2O_r1_historical.dat'), header=F)  # missing from repo
 lhist <- length(tmp[,1])
 yrs.hist <- tmp[,1]
 e.n2o <- array( NA, dim=c(lhist,nsims) )
@@ -106,7 +109,7 @@ if (diag){
   }
   axis(1); axis(2); axis(3); axis(4)
 
-  pdf( '/alphadata01/bstocker/multiGHG_analysis/n2o_diag.pdf', width=7, height=6 )
+  pdf( '/fig/n2o_diag.pdf', width=7, height=6 )
   par(new=F,xaxs="i",yaxs="i",las=1)
   
   plot(yrs.hist, e.n2o.diag[,1],
@@ -159,12 +162,12 @@ out <- data.frame( c.n2o )
 colnames(out) <- names
 year <- data.frame( year=yrs.hist )
 out <- cbind(year,out)
-write.csv( out, file="/alphadata01/bstocker/output_multiGHG/cN2O_hist.dat", row.names=F, quote=FALSE )
+write.csv( out, file=paste0(here::here(), "/data/cN2O_hist.dat"), row.names=F, quote=FALSE )
 
 out <- data.frame( e.n2o.diag )
 colnames(out) <- names
 year <- data.frame( year=yrs.hist )
 out <- cbind(year,out)
-write.csv( out, file="/alphadata01/bstocker/output_multiGHG/eN2O_diag.dat", row.names=F, quote=FALSE )
+write.csv( out, file=paste0(here::here(), "/data/eN2O_diag.dat"), row.names=F, quote=FALSE )
 
 
