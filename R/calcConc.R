@@ -2,7 +2,7 @@
 ## N2O concentration
 ##------------------------------------------------------------------------
 
-calc_cN2O <- function(eN2O,e2000){
+calc_cN2O <- function(eN2O, e2000){
   
   ## Parameters
   spinup <- 1200
@@ -12,18 +12,18 @@ calc_cN2O <- function(eN2O,e2000){
   em_mean <- mean(eN2O[1:31])
   conc = eN2O*0
   for (i in seq(spinup)){
-    conc[1] <- conc[1] + em_mean - conc[1]/tau_n2o(em_mean,e2000)
+    conc[1] <- conc[1] + em_mean - conc[1]/tau_n2o(em_mean, e2000)
     }
   
   ## Transient
   for (i in 2:length(eN2O)){
-    conc[i] <- conc[i-1] + eN2O[i-1] - conc[i-1]/tau_n2o(eN2O[i-1],e2000)
+    conc[i] <- conc[i-1] + eN2O[i-1] - conc[i-1]/tau_n2o(eN2O[i-1], e2000)
     }
   conc <- conc/g_per_ppb
   return(conc)
 }
 
-tau_n2o <- function(e_t,e2000){
+tau_n2o <- function(e_t, e2000){
   out = 120*(e_t/e2000)^(-0.055)
 }
 
