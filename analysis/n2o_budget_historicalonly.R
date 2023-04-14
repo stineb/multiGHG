@@ -165,6 +165,20 @@ ggplot() +
 ## save to file
 ggsave(paste0(here::here(), "/fig/n2o_concentrations_perturbed.pdf"), width = 8, height = 5)
 
+## ////////////////////////////////////////////////////////////////////////////////////////////////
+## Calculate radiative forcing
+## ------------------------------------------------------------------------------------------------
+## Get concentration (N) and reference concentration (N0)
+df_n2o_syn |> 
+  filter(year == 3000) |> 
+  select(concentration, concentration_elevated)
+
+## from this you can calculate the radiative forcing of this concentration increase (difference).
+
+
+
+
+
 
 # ## ////////////////////////////////////////////////////////////////////////////////////////////////
 # ## DIAGNOSE EMISSIONS
